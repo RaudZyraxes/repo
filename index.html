@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razvan Andrei Bade - CV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            color: white;
+            padding: 45px 40px 35px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #4299e1, #3182ce);
+            border-radius: 2px;
+        }
+        
+        .name {
+            font-size: 2.2em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+        
+        .title {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-bottom: 25px;
+            font-weight: 400;
+            color: #e2e8f0;
+        }
+        
+        .contact {
+            display: flex;
+            justify-content: center;
+            gap: 35px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: #e2e8f0;
+        }
+        
+        .contact-item span {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .contact-item a {
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        
+        .contact-item a:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+            color: #ffffff;
+        }
+        
+        .content {
+            padding: 45px 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-title span {
+            font-size: 1.1em;
+            opacity: 0.7;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 35px;
+            box-shadow: 0 4px 20px rgba(66, 153, 225, 0.15);
+        }
+        
+        .highlight-title {
+            font-size: 1.15em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+        
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+        }
+        
+        .achievement {
+            background: rgba(255,255,255,0.15);
+            padding: 18px;
+            border-radius: 10px;
+            border-left: 3px solid rgba(255,255,255,0.6);
+            transition: all 0.2s ease;
+        }
+        
+        .achievement:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .job {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f7fafc;
+            border-radius: 12px;
+            border-left: 4px solid #4299e1;
+            transition: all 0.2s ease;
+        }
+        
+        .job:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+        
+        .job-title {
+            font-weight: 600;
+            font-size: 1.05em;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+        
+        .company {
+            color: #4299e1;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+        
+        .date {
+            color: #718096;
+            font-size: 0.85em;
+            font-style: italic;
+            font-weight: 500;
+        }
+        
+        .project {
+            background: #ebf8ff;
+            padding: 18px;
+            margin: 12px 0;
+            border-radius: 10px;
+            border-left: 3px solid #4299e1;
+            transition: all 0.2s ease;
+        }
+        
+        .project:hover {
+            background: #bee3f8;
+        }
+        
+        .project-name {
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 6px;
+            font-size: 0.95em;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .skill-category {
+            background: #f7fafc;
+            padding: 22px;
+            border-radius: 12px;
+            border-top: 3px solid #4299e1;
+            transition: all 0.2s ease;
+        }
+        
+        .skill-category:hover {
+            background: #edf2f7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .skill-category-title {
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .skill-tag {
+            background: #4299e1;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        
+        .skill-tag:hover {
+            background: #3182ce;
+            transform: translateY(-1px);
+        }
+        
+        .education-item {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            border-left: 3px solid #4299e1;
+            transition: all 0.2s ease;
+        }
+        
+        .education-item:hover {
+            background: #edf2f7;
+            transform: translateY(-2px);
+        }
+        
+        .degree {
+            font-weight: 600;
+            color: #1a202c;
+            font-size: 0.95em;
+        }
+        
+        .university {
+            color: #4299e1;
+            margin: 6px 0;
+            font-weight: 500;
+            font-size: 0.9em;
+        }
+        
+        ul {
+            padding-left: 20px;
+            margin: 12px 0;
+        }
+        
+        li {
+            margin-bottom: 6px;
+            color: #4a5568;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 30px 20px 20px;
+            }
+            
+            .name {
+                font-size: 2em;
+            }
+            
+            .contact {
+                gap: 15px;
+            }
+            
+            .job-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="name">RAZVAN ANDREI BADE</h1>
+            <p class="title">Backend Software Engineer & Automation Specialist</p>
+            <div class="contact">
+                <div class="contact-item">
+                    <span>📧</span> <a href="mailto:baderazvan@gmail.com" style="color: white; text-decoration: none;">Correo</a>
+                </div>
+                <div class="contact-item">
+                    <span>💼</span> <a href="https://linkedin.com/in/razvan-bade" target="_blank" style="color: white; text-decoration: none;">LinkedIn</a>
+                </div>
+                <div class="contact-item">
+                    <span>🐙</span> <a href="https://github.com/RaudZyraxes" target="_blank" style="color: white; text-decoration: none;">GitHub</a>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span> Roquetas de Mar, España
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="highlight-box">
+                <div class="highlight-title">🏆 Logros Destacados & Automatización</div>
+                <div class="achievements">
+                    <div class="achievement">
+                        <strong>Mejora de Performance</strong><br>
+                        Optimicé APIs REST con Spring Boot mejorando el rendimiento en un 30%
+                    </div>
+                    <div class="achievement">
+                        <strong>Reducción de Incidentes</strong><br>
+                        Implementé monitoreo ELK Stack y Grafana, reduciendo incidentes en 40%
+                    </div>
+                    <div class="achievement">
+                        <strong>Automatización de Costos</strong><br>
+                        Automaticé workflows con Make y Parabola, reduciendo costos operativos en 20%
+                    </div>
+                    <div class="achievement">
+                        <strong>Proyectos Vodafone</strong><br>
+                        Desarrollé 3 proyectos completos de datos masivos para Vodafone via NTT Data
+                    </div>
+                    <div class="achievement">
+                        <strong>Visión Data Analytics</strong><br>
+                        Expandiendo hacia Data Analytics con certificaciones de Google, IBM, Meta y Microsoft
+                    </div>
+                </div>
+            </div>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <span>💼</span> Experiencia Profesional
+                </h2>
+                
+                <div class="job">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">Freelancer Consultant & Automation Specialist</div>
+                            <div class="company">Roquetas de Mar, España</div>
+                        </div>
+                        <div class="date">Abr 2024 - Presente</div>
+                    </div>
+                    <div class="job-description">
+                        <ul>
+                            <li><strong>Desarrollo No-Code:</strong> Creé 3 aplicaciones web completas con Bubble.io y Webflow</li>
+                            <li><strong>Automatización Avanzada:</strong> Implementé workflows automatizados con Make, N8N y Parabola</li>
+                            <li><strong>Optimización de Procesos:</strong> Automaticé flujos de bases de datos y procesos empresariales</li>
+                            <li><strong>Testing & QA:</strong> Utilizo Postman para testing de APIs y validación de integraciones</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="job">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">Backend Developer (Proyectos Vodafone)</div>
+                            <div class="company">NTT Data | Murcia, España</div>
+                        </div>
+                        <div class="date">Dic 2022 - Jun 2023</div>
+                    </div>
+                    <div class="job-description">
+                        <p><strong>Desarrollé 3 proyectos estratégicos para Vodafone:</strong></p>
+                        
+                        <div class="project">
+                            <div class="project-name">🔹 Proyecto NTOL</div>
+                            Implementación de manejo de datos masivos con ELK Stack, usando 3 pipelines para enriquecer datos JSON y visualización en Kibana
+                        </div>
+                        
+                        <div class="project">
+                            <div class="project-name">🔹 Proyecto MigracionOn15_On19</div>
+                            Migración completa con pipelines de entorno de prueba a preproducción, utilizando Beats y Filebeat
+                        </div>
+                        
+                        <div class="project">
+                            <div class="project-name">🔹 Proyecto Batch_Validate</div>
+                            Ingesta doble de datos Kafka con transformación a JSON. Desarrollé script Python como semáforo de control
+                        </div>
+                        
+                        <ul>
+                            <li>Integré Kafka para messaging en arquitecturas de microservicios</li>
+                            <li>Deploymé soluciones en Docker y Kubernetes con CI/CD pipelines</li>
+                            <li>Desarrollé APIs REST con Spring Boot y Python</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <span>🛠️</span> Habilidades Técnicas
+                </h2>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="skill-category-title">Backend & APIs</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">Spring Boot</span>
+                            <span class="skill-tag">Quarkus</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">REST APIs</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <div class="skill-category-title">Automatización</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Make</span>
+                            <span class="skill-tag">N8N</span>
+                            <span class="skill-tag">Parabola</span>
+                            <span class="skill-tag">Postman</span>
+                            <span class="skill-tag">Workflow Automation</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <div class="skill-category-title">DevOps & Cloud</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Kubernetes</span>
+                            <span class="skill-tag">AWS</span>
+                            <span class="skill-tag">CI/CD</span>
+                            <span class="skill-tag">ELK Stack</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <div class="skill-category-title">Bases de Datos</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">MongoDB</span>
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">Oracle</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <div class="skill-category-title">Messaging & Monitoring</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Kafka</span>
+                            <span class="skill-tag">Grafana</span>
+                            <span class="skill-tag">Kibana</span>
+                            <span class="skill-tag">Beats</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <div class="skill-category-title">Data Analytics (En desarrollo)</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Tableau</span>
+                            <span class="skill-tag">Power BI</span>
+                            <span class="skill-tag">R Programming</span>
+                            <span class="skill-tag">Python Analytics</span>
+                            <span class="skill-tag">Statistical Analysis</span>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-category">
+                        <div class="skill-category-title">No-Code & Testing</div>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Bubble.io</span>
+                            <span class="skill-tag">Webflow</span>
+                            <span class="skill-tag">JUnit</span>
+                            <span class="skill-tag">Selenium</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <span>🎓</span> Educación
+                </h2>
+                
+                <div class="education-item">
+                    <div class="degree">Desarrollo de Aplicaciones Web (En curso)</div>
+                    <div class="university">iFP - Innovación en Formación Profesional, Madrid</div>
+                    <div class="date">2024 - Presente</div>
+                    <p>Angular, JavaScript, SQL, Desarrollo Web Avanzado</p>
+                </div>
+                
+                <div class="education-item">
+                    <div class="degree">Ingeniería Informática Aplicada a Objetos</div>
+                    <div class="university">Universidad de Almería, España</div>
+                    <div class="date">2015 - 2020</div>
+                    <p>Java Backend, Spring Boot, APIs REST, Eclipse</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <span>🏅</span> Certificaciones & Reconocimientos
+                </h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                    <div class="education-item">
+                        <strong>Certificaciones Completadas:</strong>
+                        <ul>
+                            <li>Spring Certified Professional Academy (En proceso)</li>
+                            <li>SQL Certificate - Udemy 2024</li>
+                            <li>ELK Certificate - Udemy 2024</li>
+                            <li>Java Certificate - Udemy 2024</li>
+                        </ul>
+                        
+                        <strong style="margin-top: 15px; display: block;">Certificaciones Objetivo 2025-2026:</strong>
+                        <div style="margin-top: 10px; padding: 15px; background: #e3f2fd; border-radius: 8px; border-left: 3px solid #2196f3;">
+                            <div style="font-weight: 600; color: #1976d2; margin-bottom: 10px;">🎯 Expansión hacia Data Analytics</div>
+                            <ul style="margin: 0;">
+                                <li><strong>Google Data Analytics Professional Certificate</strong> - Coursera</li>
+                                <li><strong>IBM Data Analyst Professional Certificate</strong> - Coursera</li>
+                                <li><strong>Meta Data Analyst Professional Certificate</strong> - Coursera</li>
+                                <li><strong>Microsoft Power BI Data Analyst Professional</strong> - Coursera</li>
+                                <li><strong>Google Advanced Data Analytics Certificate</strong> - Coursera</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="education-item">
+                        <strong>Premios:</strong>
+                        <ul>
+                            <li>UAL Award - Mejor Iniciativa Empresarial (Cajamar)</li>
+                            <li>Premio Colegio de Economistas de Almería</li>
+                            <li>Premio Naturgy - Iniciativa Industrial Innovadora 2022</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
