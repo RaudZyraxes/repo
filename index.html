@@ -18,16 +18,59 @@
             max-width: 850px;
             margin: 0 auto;
             padding: 20px;
-            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            background: 
+                linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #cbd5e1 100%),
+                radial-gradient(circle at 30% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(34, 197, 94, 0.08) 0%, transparent 50%);
             min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255, 255, 255, 0.03) 2px,
+                    rgba(255, 255, 255, 0.03) 4px
+                );
+            pointer-events: none;
+            z-index: -1;
         }
         
         .container {
-            background: white;
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
             border-radius: 12px;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08);
             overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            position: relative;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .header, .content {
+            position: relative;
+            z-index: 2;
         }
         
         .header {
@@ -169,10 +212,11 @@
         .job {
             margin-bottom: 30px;
             padding: 25px;
-            background: #f7fafc;
+            background: linear-gradient(135deg, rgba(247, 250, 252, 0.8) 0%, rgba(241, 245, 249, 0.6) 100%);
             border-radius: 12px;
             border-left: 4px solid #4299e1;
             transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
         }
         
         .job:hover {
@@ -235,11 +279,12 @@
         }
         
         .skill-category {
-            background: #f7fafc;
+            background: linear-gradient(135deg, rgba(247, 250, 252, 0.7) 0%, rgba(241, 245, 249, 0.5) 100%);
             padding: 22px;
             border-radius: 12px;
             border-top: 3px solid #4299e1;
             transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
         }
         
         .skill-category:hover {
@@ -277,12 +322,13 @@
         }
         
         .education-item {
-            background: #f7fafc;
+            background: linear-gradient(135deg, rgba(247, 250, 252, 0.7) 0%, rgba(241, 245, 249, 0.5) 100%);
             padding: 20px;
             border-radius: 10px;
             margin-bottom: 18px;
             border-left: 3px solid #4299e1;
             transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
         }
         
         .education-item:hover {
