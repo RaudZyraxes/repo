@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Razvan Andrei Bade - Portfolio</title>
+    <meta http-equiv="refresh" content="0; url=./portfolio/index.html">
+    <link rel="canonical" href="./portfolio/index.html">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        .loader {
+            font-size: 1.2rem;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <h1>Cargando Portfolio...</h1>
+        <p>Si no se redirige automáticamente, <a href="./portfolio/index.html" style="color: #fff; text-decoration: underline;">haz clic aquí</a></p>
+    </div>
+    
+    <script>
+        // Redirección JavaScript como respaldo
+        setTimeout(function() {
+            window.location.href = './portfolio/index.html';
+        }, 100);
+    </script>
+</body>
+</html> 
