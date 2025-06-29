@@ -215,8 +215,8 @@
         
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.8rem;
             margin-top: 3rem;
         }
         
@@ -287,14 +287,14 @@
         
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 1.2rem;
             margin-top: 3rem;
         }
         
         .skill-item {
             background: var(--bg-white);
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: 12px;
             text-align: center;
             box-shadow: var(--shadow);
@@ -307,14 +307,15 @@
         }
         
         .skill-icon {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--primary-color);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         
         .skill-name {
             font-weight: 600;
             color: var(--text-dark);
+            font-size: 0.9rem;
         }
         
         .contact {
@@ -404,6 +405,12 @@
             
             .portfolio-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+                gap: 1rem;
             }
         }
         
@@ -417,6 +424,33 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* Iconos personalizados con logos reales de tecnologías */
+        .tech-logo {
+            width: 24px;
+            height: 24px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Estilos para SVG logos con el mismo color azul que FontAwesome */
+        .skill-icon svg, .skill-icon img {
+            width: 24px;
+            height: 24px;
+            margin: 0 auto;
+            color: var(--primary-color);
+            fill: var(--primary-color);
+        }
+        
+        /* Aplicar color azul uniforme a todos los SVGs */
+        .skill-icon img {
+            filter: invert(52%) sepia(69%) saturate(2566%) hue-rotate(191deg) brightness(103%) contrast(101%);
+        }
+        
+        /* Colores específicos de tecnologías que usan FontAwesome */
+        .openai-icon { color: var(--primary-color) !important; }
     </style>
 </head>
 <body>
@@ -437,11 +471,11 @@
             <h1 class="hero-title">Razvan Andrei Bade</h1>
             <h2 class="hero-subtitle">Desarrollador & Creador Digital</h2>
             <p class="hero-description">
-                Bienvenido a mi portafolio digital. Aquí encontrarás una selección de mis proyectos más destacados, 
-                mi experiencia profesional y las habilidades que he desarrollado a lo largo de mi carrera.
+                Bienvenido a mi portafolio digital. Especializado en desarrollo web, inteligencia artificial y análisis de datos,
+                con experiencia en proyectos corporativos y soluciones innovadoras para empresas y startups.
             </p>
             <div class="cta-buttons">
-                <a href="../cv/" class="btn btn-primary">
+                <a href="../cv/index.html" class="btn btn-primary">
                     <i class="fas fa-file-alt"></i>
                     Ver mi CV
                 </a>
@@ -457,7 +491,7 @@
         <section id="portfolio" class="section">
             <h2 class="section-title animate-on-scroll">Mi Portfolio</h2>
             <p class="section-subtitle animate-on-scroll">
-                Una colección de proyectos que demuestran mis habilidades y experiencia en desarrollo
+                Proyectos reales que incluyen desarrollo web, bots con IA, sistemas de monitoreo y soluciones corporativas
             </p>
             
             <div class="portfolio-grid">
@@ -469,34 +503,99 @@
                     <p class="card-description">
                         Mi currículum vitae completo con experiencia profesional, educación, habilidades técnicas y logros destacados.
                     </p>
-                    <a href="../cv/" class="card-link">
+                    <a href="../cv/index.html" class="card-link">
                         Ver CV <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
                 
                 <div class="portfolio-card animate-on-scroll">
                     <div class="card-icon">
-                        <i class="fas fa-code"></i>
+                        <i class="fas fa-tooth"></i>  
                     </div>
-                    <h3 class="card-title">Proyectos de Desarrollo</h3>
+                    <h3 class="card-title">Wisechoice.dental</h3>
                     <p class="card-description">
-                        Próximamente: Una colección de mis proyectos de desarrollo web, aplicaciones y soluciones técnicas.
+                        Blog especializado en odontología con contenido educativo, diseño responsive y gestión de contenido optimizada para SEO.
                     </p>
-                    <a href="#" class="card-link">
-                        Próximamente <i class="fas fa-clock"></i>
+                    <a href="wisechoice-dental/index.html" class="card-link">
+                        Ver Proyecto <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
                 
                 <div class="portfolio-card animate-on-scroll">
                     <div class="card-icon">
-                        <i class="fas fa-palette"></i>
+                        <i class="fas fa-cogs"></i>
                     </div>
-                    <h3 class="card-title">Diseño & UX</h3>
+                    <h3 class="card-title">Autoforge</h3>
                     <p class="card-description">
-                        Trabajos de diseño UI/UX, interfaces de usuario y experiencias digitales creativas.
+                        Agencia de automatización de proyectos donde soy socio fundador y CTO. Especializados en transformar procesos manuales en sistemas automatizados eficientes.
                     </p>
-                    <a href="#" class="card-link">
-                        Próximamente <i class="fas fa-clock"></i>
+                    <a href="autoforge/index.html" class="card-link">
+                        Ver Empresa <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="portfolio-card animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="card-title">TSTelling</h3>
+                    <p class="card-description">
+                        Plataforma web con interfaces responsive, JavaScript moderno y CSS frameworks para análisis y visualización de datos.
+                    </p>
+                    <a href="tstelling/index.html" class="card-link">
+                        Ver Proyecto <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="portfolio-card animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3 class="card-title">Portfolio Fotografía</h3>
+                    <p class="card-description">
+                        Sitio web de fotografía con galería interactiva, diseño minimalista y optimización para carga rápida de imágenes.
+                    </p>
+                    <a href="portfolio-fotografia/index.html" class="card-link">
+                        Ver Proyecto <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="portfolio-card animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="card-title">ArcoBot</h3>
+                    <p class="card-description">
+                        Bot inteligente con OpenAI + Python (Flask) + Render, conectado a WhatsApp para automatización de ventas y atención al cliente.
+                    </p>
+                    <a href="arcobot/index.html" class="card-link">
+                        Ver Proyecto <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="portfolio-card animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="card-title">Bioplastics Sensor System</h3>
+                    <p class="card-description">
+                        Sistema de monitoreo en Java para procesos biotecnológicos con adquisición de datos en tiempo real y algoritmos de análisis.
+                    </p>
+                    <a href="bioplastics-sensor/index.html" class="card-link">
+                        Ver Proyecto <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <div class="portfolio-card animate-on-scroll">
+                    <div class="card-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3 class="card-title">Proyectos NTT Data</h3>
+                    <p class="card-description">
+                        Proyectos corporativos incluyendo NTOL (Vodafone) con ELK Stack, sistemas de migración con Beats framework y procesamiento de datos.
+                    </p>
+                    <a href="ntt-data-projects/index.html" class="card-link">
+                        Ver Detalles <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -509,6 +608,104 @@
             </p>
             
             <div class="skills-grid">
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <div class="skill-name">Python</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fab fa-java"></i>
+                    </div>
+                    <div class="skill-name">Java</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fab fa-js"></i>
+                    </div>
+                    <div class="skill-name">JavaScript</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fab fa-node-js"></i>
+                    </div>
+                    <div class="skill-name">Node.js</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" alt="Flask" width="24" height="24">
+                    </div>
+                    <div class="skill-name">Flask</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" width="24" height="24">
+                    </div>
+                    <div class="skill-name">React</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular" width="24" height="24">
+                    </div>
+                    <div class="skill-name">Angular</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" width="24" height="24">
+                    </div>
+                    <div class="skill-name">MongoDB</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" width="24" height="24">
+                    </div>
+                    <div class="skill-name">PostgreSQL</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg" alt="ELK Stack" width="24" height="24">
+                    </div>
+                    <div class="skill-name">ELK Stack</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/offensive-vk/Icons@master/kibana/kibana-original.svg" alt="Kibana" width="24" height="24">
+                    </div>
+                    <div class="skill-name">Kibana</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fas fa-robot openai-icon"></i>
+                    </div>
+                    <div class="skill-name">OpenAI</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="skill-name">WhatsApp API</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fab fa-git-alt"></i>
+                    </div>
+                    <div class="skill-name">Git</div>
+                </div>
+                
                 <div class="skill-item animate-on-scroll">
                     <div class="skill-icon">
                         <i class="fab fa-html5"></i>
@@ -525,44 +722,93 @@
                 
                 <div class="skill-item animate-on-scroll">
                     <div class="skill-icon">
-                        <i class="fab fa-js"></i>
-                    </div>
-                    <div class="skill-name">JavaScript</div>
-                </div>
-                
-                <div class="skill-item animate-on-scroll">
-                    <div class="skill-icon">
-                        <i class="fab fa-react"></i>
-                    </div>
-                    <div class="skill-name">React</div>
-                </div>
-                
-                <div class="skill-item animate-on-scroll">
-                    <div class="skill-icon">
-                        <i class="fab fa-node-js"></i>
-                    </div>
-                    <div class="skill-name">Node.js</div>
-                </div>
-                
-                <div class="skill-item animate-on-scroll">
-                    <div class="skill-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="skill-name">Bases de Datos</div>
-                </div>
-                
-                <div class="skill-item animate-on-scroll">
-                    <div class="skill-icon">
-                        <i class="fab fa-git-alt"></i>
-                    </div>
-                    <div class="skill-name">Git</div>
-                </div>
-                
-                <div class="skill-item animate-on-scroll">
-                    <div class="skill-icon">
                         <i class="fas fa-mobile-alt"></i>
                     </div>
                     <div class="skill-name">Responsive</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg" alt="Spring Boot" width="24" height="24">
+                    </div>
+                    <div class="skill-name">Spring Boot</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/offensive-vk/Icons@master/quarkus/quarkus-original.svg" alt="Quarkus" width="24" height="24">
+                    </div>
+                    <div class="skill-name">Quarkus</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express.js" width="24" height="24">
+                    </div>
+                    <div class="skill-name">Express.js</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" width="24" height="24">
+                    </div>
+                    <div class="skill-name">MySQL</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fab fa-docker"></i>
+                    </div>
+                    <div class="skill-name">Docker</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fas fa-dharmachakra"></i>
+                    </div>
+                    <div class="skill-name">Kubernetes</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fab fa-aws"></i>
+                    </div>
+                    <div class="skill-name">AWS</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg" alt="Kafka" width="24" height="24">
+                    </div>
+                    <div class="skill-name">Kafka</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <div class="skill-name">CI/CD</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg" alt="Selenium" width="24" height="24">
+                    </div>
+                    <div class="skill-name">Selenium</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/grafana/grafana-original.svg" alt="Grafana" width="24" height="24">
+                    </div>
+                    <div class="skill-name">Grafana</div>
+                </div>
+                
+                <div class="skill-item animate-on-scroll">
+                    <div class="skill-icon">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachespark/apachespark-original.svg" alt="Apache Spark" width="24" height="24">
+                    </div>
+                    <div class="skill-name">Apache Spark</div>
                 </div>
             </div>
         </section>

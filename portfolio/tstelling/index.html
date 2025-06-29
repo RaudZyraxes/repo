@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSTelling - Plataforma de Análisis | Razvan Andrei Bade</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #00d4aa;
+            --secondary-color: #0072ff;
+            --accent-color: #7928ca;
+            --text-dark: #2d3748;
+            --text-light: #4a5568;
+            --bg-light: #f7fafc;
+            --bg-white: #ffffff;
+            --shadow: 0 20px 60px rgba(0, 212, 170, 0.15);
+            --shadow-hover: 0 30px 80px rgba(0, 212, 170, 0.25);
+            --gradient: linear-gradient(135deg, #00d4aa 0%, #0072ff 100%);
+            --gradient-hover: linear-gradient(135deg, #0072ff 0%, #7928ca 100%);
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #00d4aa 0%, #0072ff 50%, #7928ca 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dataPattern" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="2" height="2" fill="%23ffffff" opacity="0.1" x="5" y="5"/><rect width="2" height="2" fill="%23ffffff" opacity="0.1" x="15" y="15"/><circle cx="10" cy="10" r="1" fill="%23ffffff" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23dataPattern)"/></svg>');
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .back-nav {
+            margin-bottom: 2rem;
+        }
+        
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.15),
+                0 3px 10px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            font-size: 0.95rem;
+        }
+        
+        .back-nav a:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.2),
+                0 5px 15px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .back-nav a:active {
+            transform: translateY(-1px) scale(1.01);
+        }
+        
+        .project-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 4rem 3rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInScale 0.8s ease-out;
+        }
+        
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .project-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0 auto 2rem;
+            box-shadow: 0 15px 35px rgba(0, 212, 170, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            animation: dataFlow 3s infinite linear;
+        }
+        
+        @keyframes dataFlow {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 15px 35px rgba(0, 212, 170, 0.3);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 20px 40px rgba(0, 114, 255, 0.4);
+            }
+        }
+        
+        .project-icon:hover {
+            transform: scale(1.1);
+            background: var(--gradient-hover);
+            box-shadow: 0 25px 50px rgba(121, 40, 202, 0.4);
+            animation: none;
+        }
+        
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        
+        .project-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInBottom 0.8s ease-out 0.2s both;
+        }
+        
+        @keyframes slideInBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: zoomIn 0.6s ease-out 0.4s both;
+        }
+        
+        .info-card:nth-child(2) { animation-delay: 0.5s; }
+        .info-card:nth-child(3) { animation-delay: 0.6s; }
+        
+        .info-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        @keyframes zoomIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tech-tag {
+            background: var(--gradient);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .tech-tag:hover {
+            background: var(--gradient-hover);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 212, 170, 0.3);
+        }
+        
+        .tech-tag:hover::before {
+            left: 100%;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .feature-list i {
+            color: var(--accent-color);
+            width: 16px;
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 350px;
+            background: var(--gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 3rem 0;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            transform: scale(0);
+        }
+        
+        .project-image:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 25px 60px rgba(0, 212, 170, 0.4);
+            background: var(--gradient-hover);
+        }
+        
+        .project-image:hover::before {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(56, 178, 172, 0.1), rgba(49, 151, 149, 0.1));
+        }
+        
+        .image-placeholder {
+            text-align: center;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .image-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2.5rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(0, 212, 170, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: var(--gradient-hover);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 212, 170, 0.4);
+        }
+        
+        .cta-button:hover::before {
+            width: 100%;
+        }
+        
+        .cta-button:active {
+            transform: translateY(-4px) scale(1.02);
+        }
+        
+        .description-section {
+            margin-bottom: 2rem;
+        }
+        
+        .description-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .description-section p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .project-header {
+                padding: 2rem;
+            }
+            
+            .project-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#inicio">
+                <i class="fas fa-arrow-left"></i>
+                Volver al Portfolio
+            </a>
+        </div>
+        
+        <div class="project-header">
+            <div class="project-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h1 class="project-title">TSTelling</h1>
+            <p class="project-subtitle">Plataforma Web para Análisis y Visualización de Datos</p>
+            <span class="project-status">Proyecto Completado</span>
+        </div>
+        
+        <div class="content-grid">
+            <div class="main-content">
+                <div class="description-section">
+                    <h3>Descripción del Proyecto</h3>
+                    <p>
+                        TSTelling es una plataforma web moderna desarrollada con interfaces responsive y JavaScript 
+                        avanzado para análisis y visualización de datos. Utiliza CSS frameworks modernos para 
+                        proporcionar una experiencia de usuario fluida y profesional.
+                    </p>
+                    <p>
+                        La plataforma permite a los usuarios procesar, analizar y visualizar grandes conjuntos de 
+                        datos de manera interactiva, con dashboards personalizables y reportes en tiempo real 
+                        optimizados para la toma de decisiones empresariales.
+                    </p>
+                </div>
+                
+                <div class="project-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Vista previa del proyecto</p>
+                        <small>Dashboard interactivo</small>
+                    </div>
+                </div>
+                
+                <div class="description-section">
+                    <h3>Características Principales</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Interfaces responsive con JavaScript moderno</li>
+                        <li><i class="fas fa-check"></i> CSS frameworks para diseño consistente</li>
+                        <li><i class="fas fa-check"></i> Dashboards interactivos y personalizables</li>
+                        <li><i class="fas fa-check"></i> Visualización de datos en tiempo real</li>
+                        <li><i class="fas fa-check"></i> Reportes automatizados y exportables</li>
+                        <li><i class="fas fa-check"></i> Filtros avanzados y búsqueda inteligente</li>
+                        <li><i class="fas fa-check"></i> API integrada para conectividad externa</li>
+                    </ul>
+                </div>
+                
+                <div class="cta-button" style="background: #ccc; cursor: not-allowed; opacity: 0.6;">
+                    <i class="fas fa-link"></i>
+                    Enlace disponible próximamente
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="info-card">
+                    <h3><i class="fas fa-code"></i> Tecnologías Utilizadas</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">Chart.js</span>
+                        <span class="tech-tag">D3.js</span>
+                        <span class="tech-tag">Ajax</span>
+                        <span class="tech-tag">JSON</span>
+                        <span class="tech-tag">Responsive</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-info-circle"></i> Detalles del Proyecto</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-calendar"></i> Duración: 3 meses</li>
+                        <li><i class="fas fa-users"></i> Equipo: 1 desarrollador</li>
+                        <li><i class="fas fa-globe"></i> Tipo: Plataforma web</li>
+                        <li><i class="fas fa-chart-bar"></i> Enfoque: Data Analytics</li>
+                        <li><i class="fas fa-mobile-alt"></i> Responsive: Totalmente</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-tools"></i> Funcionalidades</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-chart-pie"></i> Gráficos interactivos múltiples</li>
+                        <li><i class="fas fa-filter"></i> Filtros dinámicos avanzados</li>
+                        <li><i class="fas fa-download"></i> Exportación de reportes</li>
+                        <li><i class="fas fa-sync"></i> Actualización en tiempo real</li>
+                        <li><i class="fas fa-users-cog"></i> Gestión de usuarios y permisos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioplastics Sensor System - Monitoreo Biotecnológico | Razvan Andrei Bade</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-color: #10b981; --secondary-color: #059669; --accent-color: #34d399;
+            --text-dark: #065f46; --text-light: #6b7280; --bg-white: #ffffff;
+            --shadow: 0 20px 60px rgba(16, 185, 129, 0.15); --shadow-hover: 0 30px 80px rgba(16, 185, 129, 0.25);
+            --gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-hover: linear-gradient(135deg, #059669 0%, #34d399 100%);
+        }
+        body { font-family: 'Inter', sans-serif; line-height: 1.7; color: var(--text-dark); background: linear-gradient(135deg, #10b981 0%, #059669 50%, #34d399 100%); min-height: 100vh; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="molecules" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="%23ffffff" opacity="0.1"/><circle cx="30" cy="30" r="2" fill="%23ffffff" opacity="0.1"/><circle cx="20" cy="5" r="1" fill="%23ffffff" opacity="0.08"/><circle cx="35" cy="15" r="1" fill="%23ffffff" opacity="0.08"/><line x1="10" y1="10" x2="30" y2="30" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/><line x1="20" y1="5" x2="35" y2="15" stroke="%23ffffff" stroke-width="0.5" opacity="0.08"/></pattern></defs><rect width="100" height="100" fill="url(%23molecules)"/></svg>'); pointer-events: none; z-index: -1; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .back-nav { margin-bottom: 2rem; }
+        .back-nav a { display: inline-flex; align-items: center; gap: 0.8rem; color: white; background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(10px); text-decoration: none; font-weight: 600; padding: 0.8rem 1.5rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 3px 10px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2); font-size: 0.95rem; }
+        .back-nav a:hover { background: rgba(255, 255, 255, 0.25); transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .back-nav a:active { transform: translateY(-1px) scale(1.01); }
+        .project-header { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 4rem 3rem; border-radius: 24px; box-shadow: var(--shadow); margin-bottom: 3rem; text-align: center; border: 1px solid rgba(255, 255, 255, 0.2); position: relative; overflow: hidden; animation: scientificAppear 0.8s ease-out; }
+        @keyframes scientificAppear { 0% { opacity: 0; transform: scale(0.9); filter: hue-rotate(180deg); } 100% { opacity: 1; transform: scale(1); filter: hue-rotate(0deg); } }
+        .project-icon { width: 100px; height: 100px; background: var(--gradient); border-radius: 24px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2.5rem; margin: 0 auto 2rem; box-shadow: 0 15px 35px rgba(16, 185, 129, 0.3); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; animation: sensorPulse 3s infinite ease-in-out; }
+        @keyframes sensorPulse { 0%, 100% { transform: scale(1); box-shadow: 0 15px 35px rgba(16, 185, 129, 0.3); } 50% { transform: scale(1.05); box-shadow: 0 20px 45px rgba(52, 211, 153, 0.5); filter: drop-shadow(0 0 20px rgba(52, 211, 153, 0.6)); } }
+        .project-icon:hover { transform: scale(1.15); background: var(--gradient-hover); box-shadow: 0 25px 50px rgba(52, 211, 153, 0.6); animation: none; }
+        .project-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-dark); }
+        .project-subtitle { font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem; }
+        .project-status { display: inline-block; padding: 0.5rem 1rem; background: linear-gradient(135deg, #10b981, #059669); color: white; border-radius: 20px; font-weight: 500; font-size: 0.9rem; }
+        .content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+        .main-content { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 3rem; border-radius: 24px; box-shadow: var(--shadow); border: 1px solid rgba(255, 255, 255, 0.2); animation: labEquipment 0.8s ease-out 0.2s both; }
+        @keyframes labEquipment { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .sidebar { display: flex; flex-direction: column; gap: 2rem; }
+        .info-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 2.5rem; border-radius: 20px; box-shadow: var(--shadow); border: 1px solid rgba(255, 255, 255, 0.2); transition: all 0.3s ease; animation: dataAnalysis 0.6s ease-out 0.4s both; }
+        .info-card:nth-child(2) { animation-delay: 0.5s; }
+        .info-card:nth-child(3) { animation-delay: 0.6s; }
+        .info-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: var(--shadow-hover); border: 1px solid rgba(52, 211, 153, 0.3); }
+        @keyframes dataAnalysis { from { opacity: 0; transform: rotateX(20deg) translateY(20px); } to { opacity: 1; transform: rotateX(0deg) translateY(0); } }
+        .info-card h3 { font-size: 1.3rem; margin-bottom: 1rem; color: var(--text-dark); display: flex; align-items: center; gap: 0.5rem; }
+        .tech-list { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .tech-tag { background: var(--gradient); color: white; padding: 0.6rem 1.2rem; border-radius: 25px; font-size: 0.85rem; font-weight: 600; transition: all 0.3s ease; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; position: relative; overflow: hidden; }
+        .tech-tag::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%); transform: translateX(-100%); transition: transform 0.6s ease; }
+        .tech-tag:hover { background: var(--gradient-hover); transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4); }
+        .tech-tag:hover::before { transform: translateX(100%); }
+        .feature-list { list-style: none; }
+        .feature-list li { padding: 0.5rem 0; display: flex; align-items: center; gap: 0.5rem; }
+        .feature-list i { color: var(--accent-color); width: 16px; }
+        .project-image { width: 100%; height: 350px; background: var(--gradient); border-radius: 20px; display: flex; align-items: center; justify-content: center; margin: 3rem 0; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); position: relative; overflow: hidden; border: 2px solid rgba(255, 255, 255, 0.3); }
+        .project-image::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 2px, transparent 2px), radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 2px, transparent 2px), radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.05) 1px, transparent 1px); background-size: 50px 50px, 30px 30px, 20px 20px; opacity: 0; transition: opacity 0.3s ease; animation: molecularMovement 10s infinite linear; }
+        @keyframes molecularMovement { 0% { background-position: 0 0, 0 0, 0 0; } 100% { background-position: 50px 50px, -30px -30px, 20px 20px; } }
+        .project-image:hover { transform: translateY(-10px) scale(1.03); box-shadow: 0 25px 60px rgba(16, 185, 129, 0.4); background: var(--gradient-hover); border: 2px solid rgba(52, 211, 153, 0.8); }
+        .project-image:hover::before { opacity: 1; }
+        .image-placeholder { text-align: center; color: var(--text-light); position: relative; z-index: 1; }
+        .image-placeholder i { font-size: 3rem; margin-bottom: 1rem; display: block; }
+        .cta-button { display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.2rem 2.5rem; background: var(--gradient); color: white; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 15px 35px rgba(16, 185, 129, 0.3); position: relative; overflow: hidden; text-transform: uppercase; letter-spacing: 1px; }
+        .cta-button::after { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 70%); transition: all 0.5s ease; transform: translate(-50%, -50%); border-radius: 50%; }
+        .cta-button:hover { transform: translateY(-8px) scale(1.05); box-shadow: 0 25px 50px rgba(16, 185, 129, 0.4); background: var(--gradient-hover); }
+        .cta-button:hover::after { width: 300px; height: 300px; }
+        .cta-button:active { transform: translateY(-4px) scale(1.02); }
+        .description-section { margin-bottom: 2rem; }
+        .description-section h3 { font-size: 1.4rem; margin-bottom: 1rem; color: var(--text-dark); }
+        .description-section p { color: var(--text-light); margin-bottom: 1rem; line-height: 1.8; }
+        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; gap: 2rem; } .project-header { padding: 2rem; } .project-title { font-size: 2rem; } .container { padding: 1rem; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-nav"><a href="../index.html#inicio"><i class="fas fa-arrow-left"></i> Volver al Portfolio</a></div>
+        <div class="project-header">
+            <div class="project-icon"><i class="fas fa-leaf"></i></div>
+            <h1 class="project-title">Bioplastics Sensor System</h1>
+            <p class="project-subtitle">Sistema de Monitoreo para Procesos Biotecnológicos</p>
+            <span class="project-status">Proyecto Completado</span>
+        </div>
+        <div class="content-grid">
+            <div class="main-content">
+                <div class="description-section">
+                    <h3>Descripción del Proyecto</h3>
+                    <p>Sistema de monitoreo avanzado desarrollado en Java para procesos biotecnológicos en la producción de bioplásticos. Incluye adquisición de datos de sensores de glucosa en tiempo real y algoritmos de análisis para optimizar parámetros de fermentación.</p>
+                    <p>El sistema implementa alertas automatizadas para control de calidad en manufactura biotecnológica e integra datos de sensores con bases de datos de producción para toma de decisiones basada en datos.</p>
+                </div>
+                <div class="project-image">
+                    <div class="image-placeholder"><i class="fas fa-leaf"></i><p>Vista previa del proyecto</p><small>Biotecnología avanzada</small></div>
+                </div>
+                <div class="description-section">
+                    <h3>Características Principales</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Aplicación Java para procesamiento de datos de sensores</li>
+                        <li><i class="fas fa-check"></i> Monitoreo en tiempo real de glucosa en bioplásticos</li>
+                        <li><i class="fas fa-check"></i> Algoritmos de análisis para optimización de fermentación</li>
+                        <li><i class="fas fa-check"></i> Sistema de alertas automatizado para control de calidad</li>
+                        <li><i class="fas fa-check"></i> Integración con bases de datos de producción</li>
+                        <li><i class="fas fa-check"></i> Dashboard para visualización de métricas biotecnológicas</li>
+                        <li><i class="fas fa-check"></i> Toma de decisiones basada en datos en tiempo real</li>
+                    </ul>
+                </div>
+                <div class="cta-button" style="background: #ccc; cursor: not-allowed; opacity: 0.6;"><i class="fas fa-link"></i> Enlace disponible próximamente</div>
+            </div>
+            <div class="sidebar">
+                <div class="info-card">
+                    <h3><i class="fas fa-code"></i> Tecnologías Utilizadas</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Java</span><span class="tech-tag">Spring Framework</span><span class="tech-tag">MySQL</span><span class="tech-tag">Sensor APIs</span><span class="tech-tag">Real-time Processing</span><span class="tech-tag">Data Analytics</span><span class="tech-tag">Dashboard</span><span class="tech-tag">Alerts System</span>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-info-circle"></i> Detalles del Proyecto</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-calendar"></i> Duración: 5 meses</li>
+                        <li><i class="fas fa-flask"></i> Sector: Biotecnología</li>
+                        <li><i class="fas fa-cogs"></i> Tipo: Sistema de monitoreo</li>
+                        <li><i class="fas fa-chart-line"></i> Enfoque: Tiempo real</li>
+                        <li><i class="fas fa-database"></i> Integración: Bases de datos</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-line"></i> Resultados</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-arrow-up"></i> 30% mejora en eficiencia de producción</li>
+                        <li><i class="fas fa-arrow-up"></i> 95% precisión en control de calidad</li>
+                        <li><i class="fas fa-clock"></i> Monitoreo 24/7 automatizado</li>
+                        <li><i class="fas fa-shield-alt"></i> Alertas en tiempo real</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

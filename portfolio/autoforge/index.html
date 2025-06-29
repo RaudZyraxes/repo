@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoforge - Aplicación Web Automotriz | Razvan Andrei Bade</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #feca57;
+            --accent-color: #ff8c42;
+            --text-dark: #2d3436;
+            --text-light: #636e72;
+            --bg-light: #f7fafc;
+            --bg-white: #ffffff;
+            --shadow: 0 20px 60px rgba(255, 107, 107, 0.15);
+            --shadow-hover: 0 30px 80px rgba(255, 107, 107, 0.25);
+            --gradient: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            --gradient-hover: linear-gradient(135deg, #feca57 0%, #ff8c42 100%);
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff8c42 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hexPattern" width="50" height="43.3" patternUnits="userSpaceOnUse"><polygon points="25,0 50,14.4 50,28.9 25,43.3 0,28.9 0,14.4" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23hexPattern)"/></svg>');
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .back-nav {
+            margin-bottom: 2rem;
+        }
+        
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.15),
+                0 3px 10px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            font-size: 0.95rem;
+        }
+        
+        .back-nav a:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.2),
+                0 5px 15px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .back-nav a:active {
+            transform: translateY(-1px) scale(1.01);
+        }
+        
+        .project-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 4rem 3rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: slideInFromTop 0.8s ease-out;
+        }
+        
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .project-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0 auto 2rem;
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            animation: pulse 2s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3); }
+            100% { box-shadow: 0 20px 40px rgba(255, 107, 107, 0.5); }
+        }
+        
+        .project-icon:hover {
+            transform: translateY(-10px) scale(1.05) rotate(5deg);
+            background: var(--gradient-hover);
+            box-shadow: 0 25px 50px rgba(255, 107, 107, 0.4);
+            animation: none;
+        }
+        
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        
+        .project-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideInFromLeft 0.8s ease-out 0.2s both;
+        }
+        
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: slideInFromRight 0.8s ease-out 0.4s both;
+        }
+        
+        .info-card:nth-child(2) { animation-delay: 0.5s; }
+        .info-card:nth-child(3) { animation-delay: 0.6s; }
+        
+        .info-card:hover {
+            transform: translateY(-8px) rotate(2deg);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tech-tag {
+            background: var(--gradient);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 2px solid transparent;
+        }
+        
+        .tech-tag:hover {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .feature-list i {
+            color: var(--accent-color);
+            width: 16px;
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 350px;
+            background: var(--gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 3rem 0;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 255, 255, 0.1) 10px,
+                rgba(255, 255, 255, 0.1) 20px
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-image:hover {
+            transform: translateY(-15px) scale(1.05) rotate(-2deg);
+            box-shadow: 0 30px 70px rgba(255, 107, 107, 0.4);
+            background: var(--gradient-hover);
+        }
+        
+        .project-image:hover::before {
+            opacity: 1;
+        }
+        
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(245, 101, 101, 0.1), rgba(229, 62, 62, 0.1));
+        }
+        
+        .image-placeholder {
+            text-align: center;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .image-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2.5rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 3px solid transparent;
+        }
+        
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.6s ease;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(255, 107, 107, 0.4);
+            color: var(--primary-color);
+            border: 3px solid var(--primary-color);
+        }
+        
+        .cta-button:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .cta-button:active {
+            transform: translateY(-4px) scale(1.02);
+        }
+        
+        .description-section {
+            margin-bottom: 2rem;
+        }
+        
+        .description-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .description-section p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .project-header {
+                padding: 2rem;
+            }
+            
+            .project-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#inicio">
+                <i class="fas fa-arrow-left"></i>
+                Volver al Portfolio
+            </a>
+        </div>
+        
+        <div class="project-header">
+            <div class="project-icon">
+                <i class="fas fa-cogs"></i>
+            </div>
+            <h1 class="project-title">Autoforge</h1>
+            <p class="project-subtitle">Agencia de Automatización de Proyectos</p>
+            <span class="project-status">Socio Fundador & CTO</span>
+        </div>
+        
+        <div class="content-grid">
+            <div class="main-content">
+                <div class="description-section">
+                    <h3>Descripción de la Empresa</h3>
+                    <p>
+                        <strong>Autoforge</strong> es una agencia especializada en automatización de proyectos empresariales donde 
+                        actúo como <strong>Socio Fundador y Chief Technology Officer (CTO)</strong>. Nos enfocamos en transformar 
+                        procesos manuales en sistemas automatizados eficientes utilizando las últimas tecnologías.
+                    </p>
+                    <p>
+                        Como CTO, lidero el desarrollo técnico y la implementación de soluciones de automatización 
+                        personalizadas para empresas de diversos sectores, optimizando workflows, reduciendo costos 
+                        operativos y mejorando la productividad mediante tecnologías innovadoras.
+                    </p>
+                </div>
+                
+                <div class="project-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-cogs"></i>
+                        <p>Vista previa de la agencia</p>
+                        <small>Soluciones de automatización</small>
+                    </div>
+                </div>
+                
+                <div class="description-section">
+                    <h3>Servicios de Automatización</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Automatización de workflows empresariales</li>
+                        <li><i class="fas fa-check"></i> Desarrollo de APIs y microservicios</li>
+                        <li><i class="fas fa-check"></i> Integración de sistemas y bases de datos</li>
+                        <li><i class="fas fa-check"></i> Implementación de herramientas no-code/low-code</li>
+                        <li><i class="fas fa-check"></i> Automatización de procesos de ventas y marketing</li>
+                        <li><i class="fas fa-check"></i> Desarrollo de bots inteligentes con IA</li>
+                        <li><i class="fas fa-check"></i> Consultoría técnica y optimización de procesos</li>
+                    </ul>
+                </div>
+                
+                <div class="cta-button" style="background: #ccc; cursor: not-allowed; opacity: 0.6;">
+                    <i class="fas fa-link"></i>
+                    Enlace disponible próximamente
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="info-card">
+                    <h3><i class="fas fa-code"></i> Stack Tecnológico</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Make.com</span>
+                        <span class="tech-tag">N8N</span>
+                        <span class="tech-tag">Bubble.io</span>
+                        <span class="tech-tag">Webflow</span>
+                        <span class="tech-tag">OpenAI</span>
+                        <span class="tech-tag">Parabola</span>
+                        <span class="tech-tag">APIs</span>
+                        <span class="tech-tag">Webhooks</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-info-circle"></i> Detalles de la Empresa</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-user-tie"></i> Rol: Socio Fundador & CTO</li>
+                        <li><i class="fas fa-building"></i> Tipo: Agencia de Automatización</li>
+                        <li><i class="fas fa-cogs"></i> Especialidad: Procesos empresariales</li>
+                        <li><i class="fas fa-rocket"></i> Estado: Activa</li>
+                        <li><i class="fas fa-chart-line"></i> Enfoque: B2B</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-line"></i> Impacto y Resultados</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-arrow-up"></i> 40% reducción en tiempos de proceso</li>
+                        <li><i class="fas fa-dollar-sign"></i> 25% reducción en costos operativos</li>
+                        <li><i class="fas fa-robot"></i> Automatización de tareas repetitivas</li>
+                        <li><i class="fas fa-chart-bar"></i> Analytics en tiempo real</li>
+                        <li><i class="fas fa-handshake"></i> Clientes satisfechos y fidelizados</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

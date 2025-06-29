@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcoBot - Bot con IA | Razvan Andrei Bade</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #06b6d4;
+            --accent-color: #f59e0b;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f7fafc;
+            --bg-white: #ffffff;
+            --shadow: 0 20px 60px rgba(139, 92, 246, 0.15);
+            --shadow-hover: 0 30px 80px rgba(139, 92, 246, 0.25);
+            --gradient: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+            --gradient-hover: linear-gradient(135deg, #06b6d4 0%, #f59e0b 100%);
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 50%, #f59e0b 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="circuit" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M20,10 L20,30 M10,20 L30,20 M10,10 L10,30 L30,30 L30,10 L10,10" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/><circle cx="20" cy="20" r="2" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23circuit)"/></svg>');
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .back-nav {
+            margin-bottom: 2rem;
+        }
+        
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: white;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.15),
+                0 3px 10px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            font-size: 0.95rem;
+        }
+        
+        .back-nav a:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 12px 35px rgba(0, 0, 0, 0.2),
+                0 5px 15px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .back-nav a:active {
+            transform: translateY(-1px) scale(1.01);
+        }
+        
+        .project-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 4rem 3rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: glitchIn 0.8s ease-out;
+        }
+        
+        @keyframes glitchIn {
+            0% { 
+                opacity: 0;
+                transform: translateX(-10px);
+                filter: hue-rotate(90deg);
+            }
+            20% { 
+                transform: translateX(10px);
+                filter: hue-rotate(-90deg);
+            }
+            40% { 
+                transform: translateX(-5px);
+                filter: hue-rotate(45deg);
+            }
+            60% { 
+                transform: translateX(5px);
+                filter: hue-rotate(-45deg);
+            }
+            80% { 
+                transform: translateX(-2px);
+                filter: hue-rotate(0deg);
+            }
+            100% { 
+                opacity: 1;
+                transform: translateX(0);
+                filter: hue-rotate(0deg);
+            }
+        }
+        
+        .project-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            margin: 0 auto 2rem;
+            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            animation: robotPulse 2s infinite ease-in-out;
+        }
+        
+        @keyframes robotPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 15px 35px rgba(139, 92, 246, 0.3);
+            }
+            25% { 
+                transform: scale(1.02);
+                box-shadow: 0 18px 40px rgba(6, 182, 212, 0.4);
+            }
+            50% { 
+                transform: scale(1.05);
+                box-shadow: 0 20px 45px rgba(245, 158, 11, 0.4);
+            }
+            75% { 
+                transform: scale(1.02);
+                box-shadow: 0 18px 40px rgba(6, 182, 212, 0.4);
+            }
+        }
+        
+        .project-icon:hover {
+            transform: scale(1.1) rotateY(10deg);
+            background: var(--gradient-hover);
+            box-shadow: 0 25px 50px rgba(245, 158, 11, 0.5);
+            animation: none;
+        }
+        
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+        
+        .project-status {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: morphIn 0.8s ease-out 0.2s both;
+        }
+        
+        @keyframes morphIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) rotateX(20deg);
+                border-radius: 50px;
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotateX(0deg);
+                border-radius: 24px;
+            }
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .info-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: slideInDiagonal 0.6s ease-out 0.4s both;
+        }
+        
+        .info-card:nth-child(2) { animation-delay: 0.5s; }
+        .info-card:nth-child(3) { animation-delay: 0.6s; }
+        
+        .info-card:hover {
+            transform: translateY(-12px) translateX(5px) rotateZ(2deg);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        @keyframes slideInDiagonal {
+            from {
+                opacity: 0;
+                transform: translate(50px, 50px) rotateZ(10deg);
+            }
+            to {
+                opacity: 1;
+                transform: translate(0, 0) rotateZ(0deg);
+            }
+        }
+        
+        .info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .tech-tag {
+            background: var(--gradient);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+        
+        .tech-tag::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-hover);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tech-tag:hover {
+            transform: translateY(-3px) scale(1.1) rotateZ(-2deg);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+            border: 2px solid white;
+        }
+        
+        .tech-tag:hover::after {
+            opacity: 1;
+        }
+        
+        .feature-list {
+            list-style: none;
+        }
+        
+        .feature-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .feature-list i {
+            color: var(--accent-color);
+            width: 16px;
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 350px;
+            background: var(--gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 3rem 0;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0px,
+                rgba(255, 255, 255, 0.03) 2px,
+                transparent 4px
+            ), repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                rgba(255, 255, 255, 0.03) 2px,
+                transparent 4px
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .project-image:hover {
+            transform: translateY(-15px) scale(1.05) rotateY(5deg);
+            box-shadow: 0 30px 70px rgba(139, 92, 246, 0.4);
+            background: var(--gradient-hover);
+        }
+        
+        .project-image:hover::before {
+            opacity: 1;
+        }
+        
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(159, 122, 234, 0.1), rgba(128, 90, 213, 0.1));
+        }
+        
+        .image-placeholder {
+            text-align: center;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .image-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 2.5rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, var(--gradient-hover) 0%, transparent 70%);
+            transition: all 0.6s ease;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-10px) scale(1.05) rotateZ(1deg);
+            box-shadow: 0 25px 50px rgba(139, 92, 246, 0.4);
+        }
+        
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .cta-button:active {
+            transform: translateY(-5px) scale(1.02);
+        }
+        
+        .description-section {
+            margin-bottom: 2rem;
+        }
+        
+        .description-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .description-section p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .project-header {
+                padding: 2rem;
+            }
+            
+            .project-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-nav">
+            <a href="../index.html#inicio">
+                <i class="fas fa-arrow-left"></i>
+                Volver al Portfolio
+            </a>
+        </div>
+        
+        <div class="project-header">
+            <div class="project-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h1 class="project-title">ArcoBot</h1>
+            <p class="project-subtitle">Bot Inteligente con IA para WhatsApp</p>
+            <span class="project-status">En Producción</span>
+        </div>
+        
+        <div class="content-grid">
+            <div class="main-content">
+                <div class="description-section">
+                    <h3>Descripción del Proyecto</h3>
+                    <p>
+                        ArcoBot es un bot inteligente desarrollado con OpenAI y Python (Flask) que automatiza la atención 
+                        al cliente y procesos de venta a través de WhatsApp. Implementado en Render para alta disponibilidad 
+                        y escalabilidad, conectado a un terminal de ventas para gestión integral.
+                    </p>
+                    <p>
+                        El bot utiliza inteligencia artificial avanzada para comprender consultas en lenguaje natural, 
+                        proporcionar respuestas contextuales y guiar a los usuarios a través de procesos de compra 
+                        automatizados, mejorando significativamente la experiencia del cliente.
+                    </p>
+                </div>
+                
+                <div class="project-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-robot"></i>
+                        <p>Vista previa del proyecto</p>
+                        <small>Sistema de IA avanzado</small>
+                    </div>
+                </div>
+                
+                <div class="description-section">
+                    <h3>Características Principales</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Integración con OpenAI para procesamiento de lenguaje natural</li>
+                        <li><i class="fas fa-check"></i> Conexión directa con WhatsApp Business API</li>
+                        <li><i class="fas fa-check"></i> Automatización de procesos de venta</li>
+                        <li><i class="fas fa-check"></i> Respuestas contextuales inteligentes</li>
+                        <li><i class="fas fa-check"></i> Integración con terminal de ventas</li>
+                        <li><i class="fas fa-check"></i> Analytics y reportes de conversaciones</li>
+                        <li><i class="fas fa-check"></i> Deploy en Render con alta disponibilidad</li>
+                    </ul>
+                </div>
+                
+                <div class="cta-button" style="background: #ccc; cursor: not-allowed; opacity: 0.6;">
+                    <i class="fas fa-link"></i>
+                    Enlace disponible próximamente
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="info-card">
+                    <h3><i class="fas fa-code"></i> Tecnologías Utilizadas</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">OpenAI</span>
+                        <span class="tech-tag">WhatsApp API</span>
+                        <span class="tech-tag">Render</span>
+                        <span class="tech-tag">JSON</span>
+                        <span class="tech-tag">REST API</span>
+                        <span class="tech-tag">Webhooks</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-info-circle"></i> Detalles del Proyecto</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-calendar"></i> Desarrollo: 2 meses</li>
+                        <li><i class="fas fa-rocket"></i> Estado: En producción</li>
+                        <li><i class="fas fa-globe"></i> Plataforma: WhatsApp</li>
+                        <li><i class="fas fa-brain"></i> IA: OpenAI GPT</li>
+                        <li><i class="fas fa-server"></i> Deploy: Render</li>
+                    </ul>
+                </div>
+                
+                <div class="info-card">
+                    <h3><i class="fas fa-chart-line"></i> Resultados</h3>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-arrow-up"></i> 90% de consultas automatizadas</li>
+                        <li><i class="fas fa-arrow-up"></i> Tiempo de respuesta < 3 segundos</li>
+                        <li><i class="fas fa-arrow-up"></i> 95% de satisfacción del cliente</li>
+                        <li><i class="fas fa-clock"></i> Disponible 24/7</li>
+                        <li><i class="fas fa-users"></i> Múltiples conversaciones simultáneas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
